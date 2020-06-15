@@ -7,13 +7,10 @@ import 'util/position.dart';
 import 'package:flame/game/game.dart';
 
 class SnekGame extends Game {
-  //booleans to track snake direction
-  bool playerGoingRight = false;
-  bool playerGoingDown = true;
   Snake snake = Snake(initialPositions: []);
-  Size screenSize;
   Board board = Board();
-  Direction snakeDirection = Direction.right;
+  Size screenSize;
+  Direction snakeDirection = Direction.left;
   double timeSinceLastUpdate = 0;
   double stepTime = 0.2;
 
@@ -76,6 +73,9 @@ class SnekGame extends Game {
     RowColPosition nextHeadPos = RowColPosition();
     RowColPosition oldHeadPos = snake.getHead();
 
+    //bool to track whether new snake head position has an apple
+    bool hitApple = false;
+
     //update head position
     //handle downward motion case
     if (snakeDirection == Direction.down) {
@@ -87,6 +87,16 @@ class SnekGame extends Game {
         nextHeadPos.row = 0;
       }
     }
+    //handle upward motion case
+    else if (snakeDirection == Direction.up) {
+      nextHeadPos.row = oldHeadPos.row - 1;
+      nextHeadPos.col = oldHeadPos.col;
+
+      //account for bottom-to-top wraparound
+      if (nextHeadPos.row < 0) {
+        nextHeadPos.row = board.numberOfVerticalTiles - 1;
+      }
+    }
     //handle rightward motion case
     else if (snakeDirection == Direction.right) {
       nextHeadPos.row = oldHeadPos.row;
@@ -95,6 +105,16 @@ class SnekGame extends Game {
       //account for right-to-left wraparound
       if (nextHeadPos.col >= board.numberOfHorizontalTiles) {
         nextHeadPos.col = 0;
+      }
+    }
+    //handle leftward motion case
+    else {
+      nextHeadPos.row = oldHeadPos.row;
+      nextHeadPos.col = oldHeadPos.col - 1;
+
+      //account for right-to-left wraparound
+      if (nextHeadPos.col < 0) {
+        nextHeadPos.col = board.numberOfHorizontalTiles - 1;
       }
     }
 
