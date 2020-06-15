@@ -14,6 +14,8 @@ class SnekGame extends Game {
   Size screenSize;
   Board board = Board();
   Direction snakeDirection = Direction.down;
+  double timeSinceLastUpdate = 0;
+  double stepTime = 0.2;
 
   List<RowColPosition> initialSnakePositions = [
     RowColPosition(row: 0, col: 3),
@@ -34,6 +36,8 @@ class SnekGame extends Game {
 
   @override
   void update(double t) {
+    timeSinceLastUpdate += t;
+
     //do nothing if we have not yet recieved a screenSize
     if (screenSize == null) {
       return;
@@ -45,9 +49,11 @@ class SnekGame extends Game {
       return;
     }
 
-    moveSnake();
-
-    board.update(t);
+    if (timeSinceLastUpdate >= stepTime) {
+      timeSinceLastUpdate = 0;
+      moveSnake();
+      board.update(t);
+    }
   }
 
   void initialize() {
