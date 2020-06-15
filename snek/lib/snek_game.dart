@@ -1,4 +1,6 @@
 import 'dart:ui';
+import 'package:flame/gestures.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'components/snake.dart';
 import 'components/board.dart';
@@ -6,11 +8,11 @@ import 'main.dart';
 import 'util/position.dart';
 import 'package:flame/game/game.dart';
 
-class SnekGame extends Game {
+class SnekGame extends Game with PanDetector {
   Snake snake = Snake(initialPositions: []);
   Board board = Board();
   Size screenSize;
-  Direction snakeDirection = Direction.left;
+  Direction snakeDirection = Direction.down;
   double timeSinceLastUpdate = 0;
   double stepTime = 0.2;
 
@@ -50,6 +52,45 @@ class SnekGame extends Game {
       timeSinceLastUpdate = 0;
       moveSnake();
       board.update(t);
+    }
+  }
+
+  //Method to handle drag events, which potentially entail shifting snake direction
+  @override
+  void onPanEnd(DragEndDetails details) {
+    Velocity velocity = details.velocity;
+    double xVelocity = velocity.pixelsPerSecond.dx;
+    double yVelocity = velocity.pixelsPerSecond.dy;
+    //bool to track whether the drag was primarily horizontally oriented
+    bool isHorizontal = false;
+
+    //check raw magnitude of directional velocities to determine if this was primarily
+    //a horizontal or vertical drag (defaults to vertical if they're exactly identical)
+    if (xVelocity.abs() > yVelocity.abs()) {
+      isHorizontal = true;
+    }
+
+    //handle horizontal drag case
+    if (isHorizontal) {
+      //a negative x velocity indicates a leftward drag
+      if (xVelocity < 0) {
+        snakeDirection = Direction.left;
+      }
+      //a positive x velocity indicates a rightward drag
+      else {
+        snakeDirection = Direction.right;
+      }
+    }
+    //handle vertical drag case
+    else {
+      //a negative y velocity indicates an upwards drag
+      if (yVelocity < 0) {
+        snakeDirection = Direction.up;
+      }
+      //a positive y velocity indicates a downwards drag
+      else {
+        snakeDirection = Direction.down;
+      }
     }
   }
 
