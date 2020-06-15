@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'components/snake.dart';
 import 'components/board.dart';
 import 'main.dart';
-import 'util/tile.dart';
 import 'util/position.dart';
 import 'package:flame/game/game.dart';
 
@@ -11,10 +10,17 @@ class SnekGame extends Game {
   //booleans to track snake direction
   bool playerGoingRight = false;
   bool playerGoingDown = true;
-
+  Snake snake = Snake(initialPositions: []);
   Size screenSize;
   Board board = Board();
   Direction snakeDirection = Direction.down;
+
+  List<RowColPosition> initialSnakePositions = [
+    RowColPosition(row: 0, col: 3),
+    RowColPosition(row: 1, col: 3),
+    RowColPosition(row: 2, col: 3)
+  ];
+  RowColPosition applePosition = RowColPosition(row: 10, col: 10);
 
   bool firstRun = true;
 
@@ -28,16 +34,63 @@ class SnekGame extends Game {
 
   @override
   void update(double t) {
+    //do nothing if we have not yet recieved a screenSize
     if (screenSize == null) {
       return;
     }
+    //initialize if we're on the first run
     if (firstRun) {
       firstRun = false;
-      board.initialize(screenSize);
+      initialize();
       return;
     }
 
+    moveSnake();
+
     board.update(t);
+  }
+
+  void initialize() {
+    //initialize the board
+    board.initialize(screenSize);
+
+    //initialize the snake
+    for (RowColPosition position in initialSnakePositions) {
+      snake.addHead(position);
+      board.flipSnakePresence(position);
+    }
+
+    //initialize the apple
+    board.flipApplePresencse(applePosition);
+  }
+
+  //adjusts the snake to reflect a one-tile shift in snakeDirection, then
+  //updates board tiles accordingly
+  void moveSnake() {
+    RowColPosition nextHeadPos = RowColPosition();
+    RowColPosition oldHeadPos = snake.getHead();
+
+    //update head position
+    if (snakeDirection == Direction.down) {
+      nextHeadPos.row = oldHeadPos.row + 1;
+      nextHeadPos.col = oldHeadPos.col;
+
+      //account for bottom-to-top wraparound
+      if (nextHeadPos.row >= board.numberOfVerticalTiles) {
+        nextHeadPos.row = 0;
+      }
+    }
+
+    //inform snake of updated head position
+    snake.addHead(nextHeadPos);
+
+    //inform board that the old tail should no longer be rendered
+    board.flipSnakePresence(snake.getTail());
+    //tell board to render new snake head
+    board.flipSnakePresence(snake.getHead());
+
+    //update snake tail position
+    snake.popTail();
   }
 
   @override
