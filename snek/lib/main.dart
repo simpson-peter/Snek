@@ -18,5 +18,41 @@ void main() {
   flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
   SnekGame snekGame = SnekGame();
-  runApp(snekGame.widget);
+  runApp(SnekGameShell(snekGame: snekGame.widget));
+}
+
+class SnekGameShell extends StatefulWidget {
+  Widget snekGame;
+  int score = 0;
+  SnekGameShell({@required this.snekGame});
+  @override
+  _SnekGameShellState createState() => _SnekGameShellState();
+}
+
+class _SnekGameShellState extends State<SnekGameShell> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: widget.snekGame,
+        ),
+        Column(
+          children: <Widget>[
+            SizedBox(
+              height: 10,
+              width: double.infinity,
+            )
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class ScoreBoard extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
 }

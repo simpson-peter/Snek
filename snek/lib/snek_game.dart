@@ -180,7 +180,6 @@ class SnekGame extends Game with PanDetector {
 
     //check to see if the snake his hit the apple
     if (applePosition == snake.getHead()) {
-      print('Apple Hit');
       //if so, deallocate that square as the apple, and make it a part of the snake
       board.flipApplePresencse(snake.getHead());
       board.flipSnakePresence(snake.getHead());
