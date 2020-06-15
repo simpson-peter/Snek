@@ -11,4 +11,8 @@ class RowColPosition {
   int col;
 
   RowColPosition({this.row, this.col});
+
+  bool operator ==(rhs) {
+    return (row == rhs.row && col == rhs.col);
+  }
 }

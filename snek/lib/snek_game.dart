@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 import 'package:flame/gestures.dart';
 import 'package:flutter/gestures.dart';
@@ -16,12 +17,15 @@ class SnekGame extends Game with PanDetector {
   double timeSinceLastUpdate = 0;
   double stepTime = 0.2;
 
+  //Random number generator to generate apple positions, seed with the time
+  Random rand = Random(DateTime.now().millisecondsSinceEpoch);
+
   List<RowColPosition> initialSnakePositions = [
     RowColPosition(row: 0, col: 3),
     RowColPosition(row: 1, col: 3),
     RowColPosition(row: 2, col: 3)
   ];
-  RowColPosition applePosition = RowColPosition(row: 10, col: 10);
+  RowColPosition applePosition = RowColPosition(row: 10, col: 3);
 
   bool firstRun = true;
 
@@ -114,9 +118,6 @@ class SnekGame extends Game with PanDetector {
     RowColPosition nextHeadPos = RowColPosition();
     RowColPosition oldHeadPos = snake.getHead();
 
-    //bool to track whether new snake head position has an apple
-    bool hitApple = false;
-
     //update head position
     //handle downward motion case
     if (snakeDirection == Direction.down) {
@@ -161,8 +162,34 @@ class SnekGame extends Game with PanDetector {
 
     //inform snake of updated head position
     snake.addHead(nextHeadPos);
+    print('Snake Head: ' +
+        snake.getHead().row.toString() +
+        ', ' +
+        snake.getHead().col.toString());
+    print('Apple Pos: ' +
+        applePosition.row.toString() +
+        ', ' +
+        applePosition.col.toString());
+
+    //check to see if the snake his hit the apple
+    if (applePosition == snake.getHead()) {
+      print('Apple Hit');
+      //if so, deallocate that square as the apple, and make it a part of the snake
+      board.flipApplePresencse(snake.getHead());
+      board.flipSnakePresence(snake.getHead());
+
+      //generate a new apple position
+      newApple();
+
+      //tell the board to render the new apple
+      board.flipApplePresencse(applePosition);
+
+      //we can finish here since we're not removing the tail
+      return;
+    }
 
     //inform board that the old tail should no longer be rendered
+
     board.flipSnakePresence(snake.getTail());
     //tell board to render new snake head
     board.flipSnakePresence(snake.getHead());
@@ -171,14 +198,34 @@ class SnekGame extends Game with PanDetector {
     snake.popTail();
   }
 
+  //assumes there is no longer a valid apple on the board, and creates a new one
+  void newApple() {
+    //do not generate a new apple if the snake now takes up the entire board
+    //(will result in an infinite loop otherwise)
+    if (snake.size >=
+        (board.numberOfHorizontalTiles * board.numberOfHorizontalTiles)) {
+      applePosition = null;
+      return;
+    }
+
+    int rowCoordinate = rand.nextInt(board.numberOfVerticalTiles);
+    int colCoordinate = rand.nextInt(board.numberOfHorizontalTiles);
+
+    //if the newly-generated apple conflicts with the snake, get a new position
+    if (snake.isPositionInSnake(
+        RowColPosition(row: rowCoordinate, col: colCoordinate))) {
+      newApple();
+    }
+    //otherwise set the apple to that position
+    else {
+      applePosition = RowColPosition(row: rowCoordinate, col: colCoordinate);
+    }
+  }
+
   @override
   void resize(Size size) {
     screenSize = size;
     board.setScreenSize(size);
-  }
-
-  void assignNextApple() {
-    // TODO: implement assignNextApple()
   }
 }
 
