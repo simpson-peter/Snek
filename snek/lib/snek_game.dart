@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-
+import 'components/snake.dart';
 import 'main.dart';
 import 'util/tile.dart';
 import 'util/position.dart';
@@ -22,7 +22,7 @@ class SnekGame extends Game {
 
   //2D array to track the board state
   List<List<Tile>> board = [];
-  List<RowColPosition> snake = [];
+  Snake snake = Snake(initialPositions: []);
 
   RowColPosition headPosition = RowColPosition(row: 3, col: 3);
   RowColPosition tailPosition = RowColPosition(row: 0, col: 0);
