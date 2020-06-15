@@ -59,7 +59,12 @@ class SnekGame extends Game with PanDetector {
     }
   }
 
-  //Method to handle drag events, which potentially entail shifting snake direction
+  /*
+  * Method to handle drag events, which potentially entail shifting snake direction
+  * Note that the snake is not allowed to exactly reverse its currently direction
+  * (as that would instantly end the game)
+  */
+
   @override
   void onPanEnd(DragEndDetails details) {
     Velocity velocity = details.velocity;
@@ -74,26 +79,36 @@ class SnekGame extends Game with PanDetector {
       isHorizontal = true;
     }
 
-    //handle horizontal drag case
+    //note,
+
+    //handle horizontal drag cases
     if (isHorizontal) {
       //a negative x velocity indicates a leftward drag
       if (xVelocity < 0) {
-        snakeDirection = Direction.left;
+        if (snakeDirection != Direction.right) {
+          snakeDirection = Direction.left;
+        }
       }
       //a positive x velocity indicates a rightward drag
       else {
-        snakeDirection = Direction.right;
+        if (snakeDirection != Direction.left) {
+          snakeDirection = Direction.right;
+        }
       }
     }
-    //handle vertical drag case
+    //handle vertical drag cases
     else {
       //a negative y velocity indicates an upwards drag
       if (yVelocity < 0) {
-        snakeDirection = Direction.up;
+        if (snakeDirection != Direction.down) {
+          snakeDirection = Direction.up;
+        }
       }
       //a positive y velocity indicates a downwards drag
       else {
-        snakeDirection = Direction.down;
+        if (snakeDirection != Direction.up) {
+          snakeDirection = Direction.down;
+        }
       }
     }
   }
