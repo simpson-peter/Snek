@@ -24,9 +24,6 @@ class SnekGame extends Game {
   List<List<Tile>> board = [];
   Snake snake = Snake(initialPositions: []);
 
-  RowColPosition headPosition = RowColPosition(row: 3, col: 3);
-  RowColPosition tailPosition = RowColPosition(row: 0, col: 0);
-
   Direction snakeDirection = Direction.down;
 
   bool firstRun = true;
@@ -106,7 +103,7 @@ class SnekGame extends Game {
                 )),
           );
           if (col == 3 && row <= 3) {
-            snake.insert(snake.length, RowColPosition(row: row, col: col));
+            snake.addTail(RowColPosition(row: row, col: col));
           }
         }
         board.add(newRow);
@@ -114,27 +111,22 @@ class SnekGame extends Game {
     }
 
     RowColPosition nextTile = RowColPosition();
-    Tile oldHead = board[headPosition.row][headPosition.col];
+    Tile oldHead = board[snake.getHead().row][snake.getHead().col];
 
     if (snakeDirection == Direction.down) {
-      nextTile.row = headPosition.row + 1;
-      nextTile.col = headPosition.col;
+      nextTile.row = snake.getHead().row + 1;
+      nextTile.col = snake.getHead().col;
 
       if (nextTile.row >= numberOfVerticalTiles) {
         nextTile.row = 0;
       }
     }
-    snake.insert(0, nextTile);
+    snake.addHead(nextTile);
 
-    board[tailPosition.row][tailPosition.col].hasSnake = false;
+    board[snake.getTail().row][snake.getTail().col].hasSnake = false;
     board[nextTile.row][nextTile.col].hasSnake = true;
 
-    snake.removeLast();
-    //make the second to last element the new tail
-    tailPosition = snake[snake.length - 1];
-
-    //assign new head
-    headPosition = board[nextTile.row][nextTile.col].tileRowColPosition;
+    snake.popTail();
   }
 
   @override

@@ -31,6 +31,11 @@ class Snake {
     size++;
   }
 
+  void addTail(RowColPosition newTail) {
+    snakePositions.insert(size, newTail);
+    size++;
+  }
+
   void clear() {
     snakePositions.clear();
   }
