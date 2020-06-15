@@ -17,14 +17,14 @@ void main() {
   flameUtil.fullScreen();
   flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
-  SnekGame snekGame = SnekGame();
-  runApp(SnekGameShell(snekGame: snekGame.widget));
+  //SnekGame snekGame = SnekGame();
+  runApp(SnekGameShell());
 }
 
 class SnekGameShell extends StatefulWidget {
-  Widget snekGame;
+  SnekGame snekGame = SnekGame();
   int score = 0;
-  SnekGameShell({@required this.snekGame});
+  SnekGameShell();
   @override
   _SnekGameShellState createState() => _SnekGameShellState();
 }
@@ -32,27 +32,53 @@ class SnekGameShell extends StatefulWidget {
 class _SnekGameShellState extends State<SnekGameShell> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: widget.snekGame,
-        ),
-        Column(
-          children: <Widget>[
-            SizedBox(
-              height: 10,
-              width: double.infinity,
-            )
-          ],
-        )
-      ],
+    return MaterialApp(
+      home: Column(
+        children: <Widget>[
+          Expanded(
+            child: widget.snekGame.widget,
+          ),
+          ScoreBoard(
+            score: widget.score,
+          ),
+        ],
+      ),
     );
   }
 }
 
 class ScoreBoard extends StatelessWidget {
+  final int score;
+
+  ScoreBoard({@required this.score});
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      color: Colors.black,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            color: Colors.white,
+            child: SizedBox(
+              height: 5,
+              width: double.infinity,
+            ),
+          ),
+          Text(
+            score.toString(),
+            style: TextStyle(
+              color: Colors.white,
+              decoration: TextDecoration.none,
+            ),
+          ),
+          SizedBox(
+            height: 20,
+            width: double.infinity,
+          ),
+        ],
+      ),
+    );
   }
 }
