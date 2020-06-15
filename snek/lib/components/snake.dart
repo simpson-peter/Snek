@@ -1,7 +1,7 @@
 import 'package:snek/util/position.dart';
 
 class Snake {
-  List<RowColPosition> snakePositions;
+  List<RowColPosition> _snakePositions;
   int size;
 
   /*
@@ -10,7 +10,7 @@ class Snake {
   * be the last element
   */
   Snake({List<RowColPosition> initialPositions}) {
-    snakePositions = initialPositions;
+    _snakePositions = initialPositions;
     size = initialPositions.length;
   }
 
@@ -20,31 +20,31 @@ class Snake {
       return;
       //otherwise remove the last element in snakePositions, update size
     } else {
-      snakePositions.removeLast();
+      _snakePositions.removeLast();
       size -= 1;
     }
   }
 
   //add a new head to the snake, update size accordingly
   void addHead(RowColPosition newHead) {
-    snakePositions.insert(0, newHead);
+    _snakePositions.insert(0, newHead);
     size++;
   }
 
   void addTail(RowColPosition newTail) {
-    snakePositions.insert(size, newTail);
+    _snakePositions.insert(size, newTail);
     size++;
   }
 
   void clear() {
-    snakePositions.clear();
+    _snakePositions.clear();
   }
 
   RowColPosition getHead() {
     if (size <= 0) {
       return null;
     } else {
-      return snakePositions[0];
+      return _snakePositions[0];
     }
   }
 
@@ -52,7 +52,7 @@ class Snake {
     if (size <= 0) {
       return null;
     } else {
-      return snakePositions[size - 1];
+      return _snakePositions[size - 1];
     }
   }
 }
