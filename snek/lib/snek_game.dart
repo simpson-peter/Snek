@@ -13,7 +13,7 @@ class SnekGame extends Game {
   Snake snake = Snake(initialPositions: []);
   Size screenSize;
   Board board = Board();
-  Direction snakeDirection = Direction.down;
+  Direction snakeDirection = Direction.right;
   double timeSinceLastUpdate = 0;
   double stepTime = 0.2;
 
@@ -77,6 +77,7 @@ class SnekGame extends Game {
     RowColPosition oldHeadPos = snake.getHead();
 
     //update head position
+    //handle downward motion case
     if (snakeDirection == Direction.down) {
       nextHeadPos.row = oldHeadPos.row + 1;
       nextHeadPos.col = oldHeadPos.col;
@@ -84,6 +85,16 @@ class SnekGame extends Game {
       //account for bottom-to-top wraparound
       if (nextHeadPos.row >= board.numberOfVerticalTiles) {
         nextHeadPos.row = 0;
+      }
+    }
+    //handle rightward motion case
+    else if (snakeDirection == Direction.right) {
+      nextHeadPos.row = oldHeadPos.row;
+      nextHeadPos.col = oldHeadPos.col + 1;
+
+      //account for right-to-left wraparound
+      if (nextHeadPos.col >= board.numberOfHorizontalTiles) {
+        nextHeadPos.col = 0;
       }
     }
 
