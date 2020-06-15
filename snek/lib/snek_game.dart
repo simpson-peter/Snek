@@ -162,14 +162,6 @@ class SnekGame extends Game with PanDetector {
 
     //inform snake of updated head position
     snake.addHead(nextHeadPos);
-    print('Snake Head: ' +
-        snake.getHead().row.toString() +
-        ', ' +
-        snake.getHead().col.toString());
-    print('Apple Pos: ' +
-        applePosition.row.toString() +
-        ', ' +
-        applePosition.col.toString());
 
     //check to see if the snake his hit the apple
     if (applePosition == snake.getHead()) {
