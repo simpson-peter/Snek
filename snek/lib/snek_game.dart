@@ -124,6 +124,7 @@ class SnekGame extends Game {
         nextTile.row = 0;
       }
     }
+    snake.insert(0, nextTile);
 
     board[tailPosition.row][tailPosition.col].hasSnake = false;
     board[nextTile.row][nextTile.col].hasSnake = true;
