@@ -31,6 +31,10 @@ class SnekGame extends Game with PanDetector {
   //Random number generator to generate apple positions, seed with the time
   Random rand = Random(DateTime.now().millisecondsSinceEpoch);
 
+  /*
+  * List which is used to initialize the snake's positions
+  * Should be contiguous, with the desired head position as the last element
+  */
   List<RowColPosition> initialSnakePositions = [
     RowColPosition(row: 0, col: 3),
     RowColPosition(row: 1, col: 3),

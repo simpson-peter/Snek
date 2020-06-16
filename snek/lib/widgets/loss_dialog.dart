@@ -25,6 +25,7 @@ class LossDialog extends StatelessWidget {
       child: Column(
         children: <Widget>[
           AlertDialog(
+            elevation: 0,
             backgroundColor: Colors.black,
             title: Text(
               'R.I.P.',
