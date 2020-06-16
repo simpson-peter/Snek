@@ -4,8 +4,6 @@ import 'package:flutter/services.dart';
 import 'snek_game.dart';
 import 'components/scoreboard.dart';
 
-enum Direction { up, down, left, right }
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 

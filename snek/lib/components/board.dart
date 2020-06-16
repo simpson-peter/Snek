@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:snek/constants.dart';
 import 'package:snek/main.dart';
 import 'package:snek/util/tile.dart';
 import 'package:snek/util/position.dart';
@@ -7,7 +8,7 @@ import 'package:snek/util/position.dart';
 class Board {
   //2D array to track the board state
   List<List<Tile>> board = [];
-  int numberOfHorizontalTiles = 20;
+  int numberOfHorizontalTiles = kNumberOfHorizontalTiles;
   int numberOfVerticalTiles = 0;
   Direction snakeDirection = Direction.down;
   Size screenSize;
