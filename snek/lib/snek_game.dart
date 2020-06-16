@@ -34,6 +34,9 @@ class SnekGame extends Game with PanDetector {
   //Random number generator to generate apple positions, seed with the time
   Random rand = Random(DateTime.now().millisecondsSinceEpoch);
 
+  //bool which represents whether or not the game is in acid mode
+  bool acidMode = false;
+
   /*
   * List which is used to initialize the snake's positions
   * Should be contiguous, with the desired head position as the last element
@@ -56,6 +59,13 @@ class SnekGame extends Game with PanDetector {
   void pause() {
     stepTime = double.infinity;
   }
+
+  //bool to put the game in acid mode
+  void engageAcidMode() {
+    acidMode = true;
+  }
+
+  void disengageAcidMode() {}
 
   //resumes regular game updates by setting the steptime back to the original value
   void resume() {

@@ -8,14 +8,36 @@ import 'package:snek/util/position.dart';
 class Board {
   //2D array to track the board state
   List<List<Tile>> board = [];
+
   int numberOfHorizontalTiles = kNumberOfHorizontalTiles;
   int numberOfVerticalTiles = 0;
   Direction snakeDirection = Direction.down;
   Size screenSize;
   double tileLength;
+  bool acidMode = false;
+
+  List<Color> acidColors;
+  Set<Color> acidColorPalette = {
+    Color(0xFFeeaf61),
+    Color(0xFFfb9062),
+    Color(0xFFee5d6c),
+    Color(0xFFce4993),
+    Color(0xFF6a0d83),
+  };
 
   void setScreenSize(Size screenSize) {
     this.screenSize = screenSize;
+  }
+
+  void engageAcidMode() {
+    acidMode = true;
+    //populate acid colors
+    Iterator<Color> paletteIt = acidColorPalette.iterator;
+    for (int i = 0; i < numberOfVerticalTiles; i++) {}
+  }
+
+  void disengageAcidMode() {
+    acidMode = false;
   }
 
   void render(Canvas canvas, Size screenSize) {
@@ -45,7 +67,7 @@ class Board {
         } else if (currentTile.hasSnake) {
           tilePaint.color = Colors.white;
         } else {
-          tilePaint.color = Colors.black;
+          tilePaint.color = getTileColor(RowColPosition(row: row, col: col));
         }
 
         canvas.drawRect(tileRect, tilePaint);
@@ -141,6 +163,13 @@ class Board {
         );
       }
       board.add(newRow);
+    }
+  }
+
+  Color getTileColor(RowColPosition position) {
+    //if we're not in acid mode, the background is just black
+    if (!acidMode) {
+      return Colors.black;
     }
   }
 }
