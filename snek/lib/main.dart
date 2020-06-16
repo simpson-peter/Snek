@@ -58,6 +58,12 @@ class _SnekGameShellState extends State<SnekGameShell> {
     });
   }
 
+  void onSettingsPressed() {
+    widget.snekGame.engageAcidMode();
+
+    //showDialog(context: context, builder: (_) => SettingsMenu(),);
+  }
+
   @override
   Widget build(BuildContext context) {
     widget.snekGame.setOnScore(incrementScore);
@@ -69,8 +75,21 @@ class _SnekGameShellState extends State<SnekGameShell> {
         ),
         ScoreBoard(
           score: score,
+          onSettingsPressed: onSettingsPressed,
         ),
       ],
     );
+  }
+}
+
+class SettingsMenu extends StatefulWidget {
+  @override
+  _SettingsMenuState createState() => _SettingsMenuState();
+}
+
+class _SettingsMenuState extends State<SettingsMenu> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

@@ -8,8 +8,12 @@ import 'package:snek/widgets/settings_button.dart';
 */
 class ScoreBoard extends StatelessWidget {
   final int score;
+  final Function onSettingsPressed;
 
-  ScoreBoard({@required this.score});
+  ScoreBoard({
+    @required this.score,
+    @required this.onSettingsPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +34,7 @@ class ScoreBoard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               SettingsButton(
-                onPressed: () {},
+                onPressed: onSettingsPressed,
                 minWidth: 60,
                 child: Icon(
                   Icons.settings,
