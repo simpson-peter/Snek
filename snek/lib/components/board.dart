@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:snek/constants.dart';
@@ -31,9 +32,24 @@ class Board {
 
   void engageAcidMode() {
     acidMode = true;
+
     //populate acid colors
     Iterator<Color> paletteIt = acidColorPalette.iterator;
-    for (int i = 0; i < numberOfVerticalTiles; i++) {}
+
+    //loop starts from i = 1 to avoid immediately switching colors
+    for (int i = 1; i <= numberOfVerticalTiles; i++) {
+      //if we've reached the end of the color palette, set it back to the beginning
+      if (paletteIt.current == null) {
+        paletteIt = acidColorPalette.iterator;
+      }
+
+      acidColors.add(paletteIt.current);
+
+      //every five rows, move to the next color
+      if (i % 5 == 0) {
+        paletteIt.moveNext();
+      }
+    }
   }
 
   void disengageAcidMode() {
@@ -171,5 +187,10 @@ class Board {
     if (!acidMode) {
       return Colors.black;
     }
+
+    //if we are in acid mode, pick color from the palette initialized in engageAcidMode()
+    int colorPosition = (position.row - position.col).abs();
+
+    return acidColors[colorPosition];
   }
 }
