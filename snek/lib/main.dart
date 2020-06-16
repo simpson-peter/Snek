@@ -40,12 +40,18 @@ class _SnekGameShellState extends State<SnekGameShell> {
   }
 
   void restart() async {
+    //pause the game so that multiple dialogs are not generated
+    widget.snekGame.pause();
+
+    //show the dialog, wait for the user to tap out of it
     await showDialog(
       context: context,
       builder: (_) => LossDialog(
         score: score,
       ),
     );
+
+    //once the use has left the loss dialog, start a new game from a fresh game object
     setState(() {
       score = 0;
       widget.snekGame = SnekGame();
