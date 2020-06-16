@@ -28,6 +28,9 @@ class SnekGame extends Game with PanDetector {
   Function onScore;
   Function onRestart;
 
+  //double which tracks how long to wait between game state updates
+  double stepTime = kStepTime;
+
   //Random number generator to generate apple positions, seed with the time
   Random rand = Random(DateTime.now().millisecondsSinceEpoch);
 
@@ -48,6 +51,16 @@ class SnekGame extends Game with PanDetector {
   RowColPosition applePosition = RowColPosition(row: 10, col: 5);
 
   bool firstRun = true;
+
+  //function to pause the game by setting the step time to infinity
+  void pause() {
+    stepTime = double.infinity;
+  }
+
+  //resumes regular game updates by setting the steptime back to the original value
+  void resume() {
+    stepTime = kStepTime;
+  }
 
   @override
   void render(Canvas canvas) {
