@@ -14,7 +14,7 @@ void main() {
   flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
   //SnekGame snekGame = SnekGame();
-  runApp(SnekGameShell());
+  runApp(MaterialApp(home: SnekGameShell()));
 }
 
 class SnekGameShell extends StatefulWidget {
@@ -38,8 +38,11 @@ class _SnekGameShellState extends State<SnekGameShell> {
     });
   }
 
-  void restart() {
-    print('at restart!');
+  void restart() async {
+    await showDialog(
+      context: context,
+      builder: (_) => LossDialog(),
+    );
     setState(() {
       score = 0;
       widget.snekGame = SnekGame();
@@ -50,16 +53,31 @@ class _SnekGameShellState extends State<SnekGameShell> {
   Widget build(BuildContext context) {
     widget.snekGame.setOnScore(incrementScore);
     widget.snekGame.setOnRestart(restart);
-    return MaterialApp(
-      home: Column(
-        children: <Widget>[
-          Expanded(
-            child: widget.snekGame.widget,
-          ),
-          ScoreBoard(
-            score: score,
-          ),
-        ],
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: widget.snekGame.widget,
+        ),
+        ScoreBoard(
+          score: score,
+        ),
+      ],
+    );
+  }
+}
+
+class LossDialog extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      backgroundColor: Colors.black,
+      title: Text(
+        'R.I.P.',
+      ),
+      titleTextStyle: TextStyle(
+        fontSize: 25,
+        fontFamily: 'PressStart2P',
+        color: Colors.white,
       ),
     );
   }
