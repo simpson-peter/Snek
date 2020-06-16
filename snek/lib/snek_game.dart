@@ -16,6 +16,9 @@ class SnekGame extends Game with PanDetector {
   Direction snakeDirection = Direction.down;
   double timeSinceLastUpdate = 0;
   double stepTime = 0.2;
+  Function onScore;
+
+  SnekGame({@required this.onScore});
 
   //Random number generator to generate apple positions, seed with the time
   Random rand = Random(DateTime.now().millisecondsSinceEpoch);

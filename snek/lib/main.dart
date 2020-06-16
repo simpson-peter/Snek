@@ -5,6 +5,7 @@ import 'package:flame/util.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/gestures.dart';
 import 'snek_game.dart';
+import 'components/scoreboard.dart';
 
 enum Direction { up, down, left, right }
 
@@ -22,7 +23,9 @@ void main() {
 }
 
 class SnekGameShell extends StatefulWidget {
-  SnekGame snekGame = SnekGame();
+  SnekGame snekGame = SnekGame(
+    onScore: () {},
+  );
   int score = 0;
   SnekGameShell();
   @override
@@ -40,42 +43,6 @@ class _SnekGameShellState extends State<SnekGameShell> {
           ),
           ScoreBoard(
             score: widget.score,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ScoreBoard extends StatelessWidget {
-  final int score;
-
-  ScoreBoard({@required this.score});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            color: Colors.white,
-            child: SizedBox(
-              height: 5,
-              width: double.infinity,
-            ),
-          ),
-          Text(
-            score.toString(),
-            style: TextStyle(
-              color: Colors.white,
-              decoration: TextDecoration.none,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-            width: double.infinity,
           ),
         ],
       ),
