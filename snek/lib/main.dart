@@ -23,18 +23,29 @@ void main() {
 }
 
 class SnekGameShell extends StatefulWidget {
-  SnekGame snekGame = SnekGame(
-    onScore: () {},
-  );
-  int score = 0;
-  SnekGameShell();
+  int score;
+  SnekGame snekGame = SnekGame();
+
   @override
   _SnekGameShellState createState() => _SnekGameShellState();
 }
 
 class _SnekGameShellState extends State<SnekGameShell> {
+  _SnekGameShellState() {
+    score = 0;
+  }
+
+  int score;
+
+  void incrementScore() {
+    setState(() {
+      score++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    widget.snekGame.setOnScore((incrementScore));
     return MaterialApp(
       home: Column(
         children: <Widget>[
@@ -42,7 +53,7 @@ class _SnekGameShellState extends State<SnekGameShell> {
             child: widget.snekGame.widget,
           ),
           ScoreBoard(
-            score: widget.score,
+            score: score,
           ),
         ],
       ),

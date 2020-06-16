@@ -22,6 +22,7 @@ class Board {
     Paint bgPaint = Paint();
     bgPaint.color = Colors.black;
     canvas.drawRect(bgRect, bgPaint);
+    double canvasDifferential = 0;
 
     //iterate through the game board and render each tile as a square,
     //color dependant on position contents.
@@ -48,6 +49,22 @@ class Board {
 
         canvas.drawRect(tileRect, tilePaint);
       }
+      if (row == numberOfVerticalTiles - 1) {
+        canvasDifferential =
+            screenSize.height - (tileLength * numberOfVerticalTiles);
+      }
+    }
+
+    if (canvasDifferential != 0) {
+      Rect bottomBorder = Rect.fromLTWH(
+          0,
+          screenSize.height - canvasDifferential,
+          screenSize.width,
+          canvasDifferential);
+
+      Paint bottomBorderPaint = Paint();
+      bottomBorderPaint.color = Colors.white;
+      canvas.drawRect(bottomBorder, bottomBorderPaint);
     }
   }
 

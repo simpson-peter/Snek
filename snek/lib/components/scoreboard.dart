@@ -20,7 +20,7 @@ class ScoreBoard extends StatelessWidget {
           Container(
             color: Colors.white,
             child: SizedBox(
-              height: 5,
+              height: 2,
               width: double.infinity,
             ),
           ),

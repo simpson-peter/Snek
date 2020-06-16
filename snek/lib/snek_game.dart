@@ -18,7 +18,7 @@ class SnekGame extends Game with PanDetector {
   double stepTime = 0.2;
   Function onScore;
 
-  SnekGame({@required this.onScore});
+  SnekGame();
 
   //Random number generator to generate apple positions, seed with the time
   Random rand = Random(DateTime.now().millisecondsSinceEpoch);
@@ -116,6 +116,10 @@ class SnekGame extends Game with PanDetector {
     }
   }
 
+  void setOnScore(Function onScore) {
+    this.onScore = onScore;
+  }
+
   void initialize() {
     //initialize the board
     board.initialize(screenSize);
@@ -186,6 +190,9 @@ class SnekGame extends Game with PanDetector {
       //if so, deallocate that square as the apple, and make it a part of the snake
       board.flipApplePresencse(snake.getHead());
       board.flipSnakePresence(snake.getHead());
+
+      //call callback passed in as a parameter to adjust score
+      onScore();
 
       //generate a new apple position
       newApple();
