@@ -65,6 +65,13 @@ class Snake {
 
   //function which tests the membership of snake @ position
   bool isPositionInSnake(RowColPosition position) {
-    return _snakePositionsSet.contains(position);
+    for (RowColPosition compPosition in _snakePositions) {
+      if (compPosition.row == position.row) {
+        if (compPosition.col == position.col) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

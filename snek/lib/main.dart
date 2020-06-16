@@ -1,9 +1,6 @@
-import 'package:flame/game/game.dart';
-import 'package:flame/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flame/util.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/gestures.dart';
 import 'snek_game.dart';
 import 'components/scoreboard.dart';
 
@@ -43,9 +40,18 @@ class _SnekGameShellState extends State<SnekGameShell> {
     });
   }
 
+  void restart() {
+    print('at restart!');
+    setState(() {
+      score = 0;
+      widget.snekGame = SnekGame();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    widget.snekGame.setOnScore((incrementScore));
+    widget.snekGame.setOnScore(incrementScore);
+    widget.snekGame.setOnRestart(restart);
     return MaterialApp(
       home: Column(
         children: <Widget>[

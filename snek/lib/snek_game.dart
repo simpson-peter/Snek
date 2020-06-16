@@ -17,8 +17,7 @@ class SnekGame extends Game with PanDetector {
   double timeSinceLastUpdate = 0;
   double stepTime = 0.2;
   Function onScore;
-
-  SnekGame();
+  Function onRestart;
 
   //Random number generator to generate apple positions, seed with the time
   Random rand = Random(DateTime.now().millisecondsSinceEpoch);
@@ -44,7 +43,7 @@ class SnekGame extends Game with PanDetector {
   void update(double t) {
     timeSinceLastUpdate += t;
 
-    //do nothing if we have not yet recieved a screenSize
+    //do nothing if we have not yet received a screenSize
     if (screenSize == null) {
       return;
     }
@@ -120,6 +119,10 @@ class SnekGame extends Game with PanDetector {
     this.onScore = onScore;
   }
 
+  void setOnRestart(Function onRestart) {
+    this.onRestart = onRestart;
+  }
+
   void initialize() {
     //initialize the board
     board.initialize(screenSize);
@@ -180,6 +183,12 @@ class SnekGame extends Game with PanDetector {
       if (nextHeadPos.col < 0) {
         nextHeadPos.col = board.numberOfHorizontalTiles - 1;
       }
+    }
+
+    //check to see if the snake has hit itself (game end condition)
+    if (snake.isPositionInSnake(nextHeadPos)) {
+      print('Snake has hit itself');
+      onRestart();
     }
 
     //inform snake of updated head position
