@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:snek/constants.dart';
+import 'package:snek/widgets/settings_button.dart';
 
 /*
 * shows the score as a widget which stretches across as much of the horizontal axis
@@ -24,9 +25,34 @@ class ScoreBoard extends StatelessWidget {
               width: double.infinity,
             ),
           ),
-          Text(
-            score.toString(),
-            style: kScoreTextStyle,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              SettingsButton(
+                onPressed: () {},
+                minWidth: 60,
+                child: Icon(
+                  Icons.settings,
+                  size: 40,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                score.toString(),
+                style: kScoreTextStyle,
+              ),
+
+              //Here we have a second invisible Icon to center the score
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: Icon(
+                  Icons.settings,
+                  size: 40,
+                  color: Colors.black,
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: 20,
