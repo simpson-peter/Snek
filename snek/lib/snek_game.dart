@@ -10,12 +10,21 @@ import 'package:flame/game/game.dart';
 import 'constants.dart';
 
 class SnekGame extends Game with PanDetector {
+  //Snake object which store's the snake's positions on the board
   Snake snake = Snake(initialPositions: []);
+
+  //Board object tracks individual tile states and is responsible for rendering them
   Board board = Board();
+
+  //Flame widget which tracks the screen size
   Size screenSize;
+
+  //Enum (see declaration in constants.dart) which tracks the snake's head travel direction
   Direction snakeDirection = Direction.down;
+
+  //double which is updated by the update() function, and controls how often we update the game state
   double timeSinceLastUpdate = 0;
-  double stepTime = 0.2;
+
   Function onScore;
   Function onRestart;
 
@@ -193,7 +202,6 @@ class SnekGame extends Game with PanDetector {
 
     //check to see if the snake has hit itself (game end condition)
     if (snake.isPositionInSnake(nextHeadPos)) {
-      print('Snake has hit itself');
       onRestart();
     }
 

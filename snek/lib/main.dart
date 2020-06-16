@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flame/util.dart';
 import 'package:flutter/services.dart';
-import 'package:snek/constants.dart';
+import 'widgets/loss_dialog.dart';
 import 'snek_game.dart';
 import 'components/scoreboard.dart';
 
@@ -65,50 +65,6 @@ class _SnekGameShellState extends State<SnekGameShell> {
           score: score,
         ),
       ],
-    );
-  }
-}
-
-class LossDialog extends StatelessWidget {
-  final int score;
-
-  LossDialog({this.score = -1});
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pop();
-      },
-      child: AlertDialog(
-        backgroundColor: Colors.black,
-        title: Text(
-          'R.I.P.',
-          textAlign: TextAlign.center,
-        ),
-        titleTextStyle: kLossMenuTextStyle,
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Final Score: ' + score.toString(),
-              style: kLossMenuTextStyle.copyWith(
-                fontSize: 20,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Restart?',
-              style: kLossMenuTextStyle.copyWith(
-                fontSize: 20,
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

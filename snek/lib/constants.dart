@@ -11,7 +11,7 @@ const TextStyle kScoreTextStyle = TextStyle(
 
 const int kNumberOfHorizontalTiles = 20;
 
-const double stepTime = 0.15;
+const double stepTime = 0.17;
 
 const TextStyle kLossMenuTextStyle = TextStyle(
   fontSize: 25,
