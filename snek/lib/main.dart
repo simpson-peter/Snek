@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flame/util.dart';
 import 'package:flutter/services.dart';
+import 'package:snek/constants.dart';
 import 'snek_game.dart';
 import 'components/scoreboard.dart';
 
@@ -41,7 +42,9 @@ class _SnekGameShellState extends State<SnekGameShell> {
   void restart() async {
     await showDialog(
       context: context,
-      builder: (_) => LossDialog(),
+      builder: (_) => LossDialog(
+        score: score,
+      ),
     );
     setState(() {
       score = 0;
@@ -67,17 +70,44 @@ class _SnekGameShellState extends State<SnekGameShell> {
 }
 
 class LossDialog extends StatelessWidget {
+  final int score;
+
+  LossDialog({this.score = -1});
+
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: Colors.black,
-      title: Text(
-        'R.I.P.',
-      ),
-      titleTextStyle: TextStyle(
-        fontSize: 25,
-        fontFamily: 'PressStart2P',
-        color: Colors.white,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pop();
+      },
+      child: AlertDialog(
+        backgroundColor: Colors.black,
+        title: Text(
+          'R.I.P.',
+          textAlign: TextAlign.center,
+        ),
+        titleTextStyle: kLossMenuTextStyle,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'Final Score: ' + score.toString(),
+              style: kLossMenuTextStyle.copyWith(
+                fontSize: 20,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Restart?',
+              style: kLossMenuTextStyle.copyWith(
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

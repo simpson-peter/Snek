@@ -12,3 +12,9 @@ const TextStyle kScoreTextStyle = TextStyle(
 const int kNumberOfHorizontalTiles = 20;
 
 const double stepTime = 0.15;
+
+const TextStyle kLossMenuTextStyle = TextStyle(
+  fontSize: 25,
+  fontFamily: 'PressStart2P',
+  color: Colors.white,
+);
