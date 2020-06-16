@@ -39,7 +39,7 @@ class LossDialog extends StatelessWidget {
                 Text(
                   'FINAL SCORE: ' + score.toString(),
                   style: kLossMenuTextStyle.copyWith(
-                    fontSize: 20,
+                    fontSize: 15,
                   ),
                 ),
                 SizedBox(
@@ -48,7 +48,7 @@ class LossDialog extends StatelessWidget {
                 Text(
                   'RESTART?',
                   style: kLossMenuTextStyle.copyWith(
-                    fontSize: 20,
+                    fontSize: 15,
                   ),
                 ),
               ],

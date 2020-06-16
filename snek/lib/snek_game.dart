@@ -45,7 +45,7 @@ class SnekGame extends Game with PanDetector {
     RowColPosition(row: 6, col: 3),
     RowColPosition(row: 7, col: 3),
   ];
-  RowColPosition applePosition = RowColPosition(row: 10, col: 3);
+  RowColPosition applePosition = RowColPosition(row: 10, col: 5);
 
   bool firstRun = true;
 
