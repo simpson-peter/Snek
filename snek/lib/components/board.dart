@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:snek/constants.dart';
@@ -17,14 +16,13 @@ class Board {
   double tileLength;
   bool acidMode = false;
 
-  List<Color> acidColors;
-  Set<Color> acidColorPalette = {
+  List<Color> acidColors = [
     Color(0xFFeeaf61),
     Color(0xFFfb9062),
     Color(0xFFee5d6c),
     Color(0xFFce4993),
     Color(0xFF6a0d83),
-  };
+  ];
 
   void setScreenSize(Size screenSize) {
     this.screenSize = screenSize;
@@ -33,6 +31,7 @@ class Board {
   void engageAcidMode() {
     acidMode = true;
 
+    /*
     //populate acid colors
     Iterator<Color> paletteIt = acidColorPalette.iterator;
 
@@ -40,7 +39,7 @@ class Board {
     for (int i = 1; i <= numberOfVerticalTiles; i++) {
       //if we've reached the end of the color palette, set it back to the beginning
       if (paletteIt.current == null) {
-        paletteIt = acidColorPalette.iterator;
+        //paletteIt = acidColorPalette.iterator;
       }
 
       acidColors.add(paletteIt.current);
@@ -50,6 +49,7 @@ class Board {
         paletteIt.moveNext();
       }
     }
+     */
   }
 
   void disengageAcidMode() {
@@ -182,6 +182,8 @@ class Board {
     }
   }
 
+  int colorIdx = 0;
+
   Color getTileColor(RowColPosition position) {
     //if we're not in acid mode, the background is just black
     if (!acidMode) {
@@ -191,6 +193,10 @@ class Board {
     //if we are in acid mode, pick color from the palette initialized in engageAcidMode()
     int colorPosition = (position.row - position.col).abs();
 
-    return acidColors[colorPosition];
+    if (colorIdx >= acidColors.length) {
+      colorIdx = 0;
+    }
+
+    return acidColors[colorIdx++];
   }
 }

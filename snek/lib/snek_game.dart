@@ -60,12 +60,17 @@ class SnekGame extends Game with PanDetector {
     stepTime = double.infinity;
   }
 
-  //bool to put the game in acid mode
+  //function to put the game in acid mode
   void engageAcidMode() {
     acidMode = true;
+    board.engageAcidMode();
   }
 
-  void disengageAcidMode() {}
+  //function to take the game out of acid mode
+  void disengageAcidMode() {
+    acidMode = false;
+    board.disengageAcidMode();
+  }
 
   //resumes regular game updates by setting the steptime back to the original value
   void resume() {
