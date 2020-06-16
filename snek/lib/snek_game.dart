@@ -236,6 +236,11 @@ class SnekGame extends Game with PanDetector {
     int rowCoordinate = rand.nextInt(board.numberOfVerticalTiles);
     int colCoordinate = rand.nextInt(board.numberOfHorizontalTiles);
 
+    //re-generate the apple if it's outside of the safe area
+    if (rowCoordinate <= 2) {
+      newApple();
+    }
+
     //if the newly-generated apple conflicts with the snake, get a new position
     if (snake.isPositionInSnake(
         RowColPosition(row: rowCoordinate, col: colCoordinate))) {
