@@ -74,15 +74,15 @@ class _SnekGameShellState extends State<SnekGameShell> {
     * Display the settings menu,
     * then receive the updated settings object from the settings menu
     */
-    widget.settings = await showDialog(
+    Settings settings = await showDialog(
       context: context,
       builder: (_) => SettingsMenu(
-        settings: widget.settings,
+        oldSettings: widget.settings,
       ),
     );
 
     print('Settings returned, is groovy mode engaged? ' +
-        widget.settings.isInGroovyMode.toString());
+        settings.isInGroovyMode.toString());
 
     widget.snekGame.resume();
   }
@@ -106,22 +106,27 @@ class _SnekGameShellState extends State<SnekGameShell> {
 }
 
 class SettingsMenu extends StatefulWidget {
-  Settings settings;
+  final Settings oldSettings;
 
-  SettingsMenu({@required this.settings});
+  SettingsMenu({@required this.oldSettings});
 
   @override
   _SettingsMenuState createState() => _SettingsMenuState();
 }
 
 class _SettingsMenuState extends State<SettingsMenu> {
+  Settings newSettings;
+
   @override
   Widget build(BuildContext context) {
+    //transfer settings data to initialize menu
+    newSettings = widget.oldSettings;
     return GestureDetector(
       onTap: () {
         Navigator.pop(context);
       },
-      child: Container(
+      child: Card(
+        elevation: 0,
         color: Colors.black,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -129,7 +134,7 @@ class _SettingsMenuState extends State<SettingsMenu> {
           children: <Widget>[
             SettingsButton(
               onPressed: () {
-                Navigator.pop(context, widget.settings);
+                Navigator.pop(context, newSettings);
               },
               child: Icon(
                 Icons.close,
@@ -140,10 +145,16 @@ class _SettingsMenuState extends State<SettingsMenu> {
               'Settings',
               style: kSettingsMenuTextStyle,
             ),
-            /*MenuItem(
+            MenuItem(
               label: 'Strange Mode',
-              onChanged: (bool checked) {},
-            ),*/
+              //update the settings object to match the checkbox state
+              onChanged: () {
+                setState(() {
+                  newSettings.isInGroovyMode = !newSettings.isInGroovyMode;
+                });
+              },
+              checkboxValue: widget.oldSettings.isInGroovyMode,
+            ),
           ],
         ),
       ),
@@ -154,8 +165,13 @@ class _SettingsMenuState extends State<SettingsMenu> {
 class MenuItem extends StatelessWidget {
   final String label;
   final Function onChanged;
+  final bool checkboxValue;
 
-  MenuItem({@required this.label, @required this.onChanged});
+  MenuItem({
+    @required this.label,
+    @required this.onChanged,
+    @required this.checkboxValue,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -166,10 +182,29 @@ class MenuItem extends StatelessWidget {
           label,
           style: kSettingsMenuTextStyle,
         ),
-        Checkbox(
+        SettingsCheckbox(
+          value: checkboxValue,
           onChanged: onChanged,
         ),
       ],
+    );
+  }
+}
+
+class SettingsCheckbox extends StatelessWidget {
+  final bool value;
+  final Function onChanged;
+
+  SettingsCheckbox({@required this.value, @required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onChanged,
+      child: Icon(
+        Icons.check_circle,
+        color: Colors.white,
+      ),
     );
   }
 }

@@ -46,7 +46,7 @@ class LossDialog extends StatelessWidget {
                   height: 20,
                 ),
                 Text(
-                  'RESTART?',
+                  'TAP TO RESTART',
                   style: kLossMenuTextStyle.copyWith(
                     fontSize: 15,
                   ),
