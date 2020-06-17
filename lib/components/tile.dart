@@ -1,4 +1,4 @@
-import 'position.dart';
+import '../util/position.dart';
 
 //represents the tiles, comprised of many pixels in a square, which comprise the game board
 class Tile {

@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:snek/constants.dart';
-import 'package:snek/util/tile.dart';
+import 'package:snek/components/tile.dart';
 import 'package:snek/util/position.dart';
 
 class Board {
