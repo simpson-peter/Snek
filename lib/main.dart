@@ -14,5 +14,8 @@ void main() {
   flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
   //Run the game shell
-  runApp(MaterialApp(home: SnekGameShell()));
+  runApp(MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: SnekGameShell(),
+  ));
 }
