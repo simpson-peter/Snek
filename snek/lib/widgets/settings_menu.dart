@@ -24,51 +24,83 @@ class _SettingsMenuState extends State<SettingsMenu> {
   Widget build(BuildContext context) {
     //transfer settings data to initialize menu
     newSettings = widget.oldSettings;
-    return GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Card(
-        elevation: 0,
-        color: Colors.black,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SettingsButton(
+    return Card(
+      shape: Border.all(
+        width: 2,
+        color: Colors.white,
+      ),
+      elevation: 0,
+      color: Colors.black,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: SettingsButton(
               onPressed: () {
                 Navigator.pop(context, newSettings);
               },
               child: Icon(
                 Icons.close,
+                size: 30,
                 color: Colors.white,
               ),
             ),
-            Text(
-              'SETTINGS',
-              style: kSettingsMenuTextStyle,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  'SETTINGS',
+                  style: kSettingsMenuTextStyle,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    ),
+                    MenuItem(
+                      label: 'GROOVY MODE',
+                      //update the settings object to match the checkbox state
+                      onChanged: () {
+                        setState(() {
+                          newSettings.isInGroovyMode =
+                              !newSettings.isInGroovyMode;
+                        });
+                      },
+                      checkboxValue: newSettings.isInGroovyMode,
+                    ),
+                    SizedBox(
+                      height: 3,
+                    ),
+                    Text(
+                      'warning: flashing colors',
+                      style: kSettingsMenuTextStyle.copyWith(
+                        fontSize: 10,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    MenuItem(
+                      label: 'TURBO MODE',
+                      onChanged: () {
+                        setState(() {
+                          newSettings.isTurbo = !newSettings.isTurbo;
+                        });
+                      },
+                      checkboxValue: newSettings.isTurbo,
+                    )
+                  ],
+                ),
+              ],
             ),
-            MenuItem(
-              label: 'GROOVY MODE',
-              //update the settings object to match the checkbox state
-              onChanged: () {
-                setState(() {
-                  newSettings.isInGroovyMode = !newSettings.isInGroovyMode;
-                });
-              },
-              checkboxValue: newSettings.isInGroovyMode,
-            ),
-            MenuItem(
-              label: 'TURBO MODE',
-              onChanged: () {
-                setState(() {
-                  newSettings.isTurbo = !newSettings.isTurbo;
-                });
-              },
-              checkboxValue: newSettings.isTurbo,
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
