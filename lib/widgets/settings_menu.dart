@@ -97,6 +97,15 @@ class _SettingsMenuState extends State<SettingsMenu> {
                     )
                   ],
                 ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  'Created by Peter Simpson',
+                  style: kSettingsMenuTextStyle.copyWith(
+                    fontSize: 8,
+                  ),
+                )
               ],
             ),
           ),
