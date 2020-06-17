@@ -29,6 +29,9 @@ class SnekGame extends Game with PanDetector {
   Function onScore;
   Function onRestart;
 
+  //value to track previous stepTime when game is paused
+  double oldStepTime = kStepTime;
+
   //double which tracks how long to wait between game state updates
   double stepTime = kStepTime;
 
@@ -79,15 +82,18 @@ class SnekGame extends Game with PanDetector {
 
   void setSpeed(bool isInTurboMode) {
     if (isInTurboMode) {
-      stepTime = kStepTime * 2;
+      print('Turbo Engaged');
+      stepTime = kStepTime / 3;
+      oldStepTime = stepTime;
     } else {
+      oldStepTime = kStepTime;
       stepTime = kStepTime;
     }
   }
 
   //resumes regular game updates by setting the steptime back to the original value
   void resume() {
-    stepTime = kStepTime;
+    stepTime = oldStepTime;
   }
 
   @override

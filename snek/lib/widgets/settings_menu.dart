@@ -58,6 +58,15 @@ class _SettingsMenuState extends State<SettingsMenu> {
               },
               checkboxValue: newSettings.isInGroovyMode,
             ),
+            MenuItem(
+              label: 'TURBO MODE',
+              onChanged: () {
+                setState(() {
+                  newSettings.isTurbo = !newSettings.isTurbo;
+                });
+              },
+              checkboxValue: newSettings.isTurbo,
+            )
           ],
         ),
       ),
