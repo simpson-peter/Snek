@@ -1,4 +1,4 @@
-import 'package:snek/util/position.dart';
+import 'package:Snek/util/position.dart';
 
 //Todo: Optimize membership tester to utilize the positions set
 

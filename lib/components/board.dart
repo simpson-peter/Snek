@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:snek/constants.dart';
-import 'package:snek/components/tile.dart';
-import 'package:snek/util/position.dart';
+import 'package:Snek/constants.dart';
+import 'package:Snek/components/tile.dart';
+import 'package:Snek/util/position.dart';
 
 class Board {
   //2D array to track the board state

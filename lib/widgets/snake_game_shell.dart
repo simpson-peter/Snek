@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'loss_dialog.dart';
-import 'package:snek/components/snek_game.dart';
-import 'package:snek/widgets/scoreboard.dart';
-import 'package:snek/util/settings.dart';
+import 'package:Snek/components/snek_game.dart';
+import 'package:Snek/widgets/scoreboard.dart';
+import 'package:Snek/util/settings.dart';
 import 'settings_menu.dart';
 
 /*

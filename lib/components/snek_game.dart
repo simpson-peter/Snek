@@ -4,7 +4,7 @@ import 'package:flame/gestures.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'snake.dart';
-import 'package:snek/util/settings.dart';
+import 'package:Snek/util/settings.dart';
 import 'board.dart';
 import '../util/position.dart';
 import 'package:flame/game/game.dart';

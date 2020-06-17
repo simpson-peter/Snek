@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:snek/constants.dart';
-import 'package:snek/widgets/settings_button.dart';
+import 'package:Snek/constants.dart';
+import 'package:Snek/widgets/settings_button.dart';
 
 /*
 * shows the score as a widget which stretches across as much of the horizontal axis

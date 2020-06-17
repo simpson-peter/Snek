@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:snek/constants.dart';
+import 'package:Snek/constants.dart';
 import 'settings_checkbox.dart';
 
 /*

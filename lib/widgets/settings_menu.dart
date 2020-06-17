@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'settings_button.dart';
-import 'package:snek/constants.dart';
-import 'package:snek/util/settings.dart';
+import 'package:Snek/constants.dart';
+import 'package:Snek/util/settings.dart';
 import 'menu_item.dart';
 
 /*
