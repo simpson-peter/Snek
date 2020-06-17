@@ -15,4 +15,8 @@ class RowColPosition {
   bool operator ==(rhs) {
     return (row == rhs.row && col == rhs.col);
   }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
 }

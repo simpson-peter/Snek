@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flame/util.dart';
 import 'package:flutter/services.dart';
-import 'package:snek/constants.dart';
 import 'widgets/loss_dialog.dart';
 import 'components/snek_game.dart';
 import 'components/scoreboard.dart';
 import 'util/settings.dart';
-import 'widgets/settings_button.dart';
-import 'widgets/menu_item.dart';
+import 'widgets/settings_menu.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,11 +21,12 @@ void main() {
 }
 
 class SnekGameShell extends StatefulWidget {
-  int score;
-  SnekGame snekGame = SnekGame();
-
   //initialize a settings object with all fields turned off
+  static Settings defaultSettings = Settings();
   Settings settings = Settings();
+
+  int score;
+  SnekGame snekGame = SnekGame(defaultSettings);
 
   @override
   _SnekGameShellState createState() => _SnekGameShellState();
@@ -62,7 +61,7 @@ class _SnekGameShellState extends State<SnekGameShell> {
     //once the use has left the loss dialog, start a new game from a fresh game object
     setState(() {
       score = 0;
-      widget.snekGame = SnekGame();
+      widget.snekGame = SnekGame(widget.settings);
     });
   }
 
@@ -75,15 +74,14 @@ class _SnekGameShellState extends State<SnekGameShell> {
     * Display the settings menu,
     * then receive the updated settings object from the settings menu
     */
-    Settings settings = await showDialog(
+    widget.settings = await showDialog(
       context: context,
       builder: (_) => SettingsMenu(
         oldSettings: widget.settings,
       ),
     );
 
-    print('Settings returned, is groovy mode engaged? ' +
-        settings.isInGroovyMode.toString());
+    widget.snekGame.setSettings(widget.settings);
 
     widget.snekGame.resume();
   }
@@ -102,63 +100,6 @@ class _SnekGameShellState extends State<SnekGameShell> {
           onSettingsPressed: onSettingsPressed,
         ),
       ],
-    );
-  }
-}
-
-class SettingsMenu extends StatefulWidget {
-  final Settings oldSettings;
-
-  SettingsMenu({@required this.oldSettings});
-
-  @override
-  _SettingsMenuState createState() => _SettingsMenuState();
-}
-
-class _SettingsMenuState extends State<SettingsMenu> {
-  Settings newSettings;
-
-  @override
-  Widget build(BuildContext context) {
-    //transfer settings data to initialize menu
-    newSettings = widget.oldSettings;
-    return GestureDetector(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Card(
-        elevation: 0,
-        color: Colors.black,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SettingsButton(
-              onPressed: () {
-                Navigator.pop(context, newSettings);
-              },
-              child: Icon(
-                Icons.close,
-                color: Colors.white,
-              ),
-            ),
-            Text(
-              'SETTINGS',
-              style: kSettingsMenuTextStyle,
-            ),
-            MenuItem(
-              label: 'GROOVY MODE',
-              //update the settings object to match the checkbox state
-              onChanged: () {
-                setState(() {
-                  newSettings.isInGroovyMode = !newSettings.isInGroovyMode;
-                });
-              },
-              checkboxValue: newSettings.isInGroovyMode,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

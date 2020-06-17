@@ -4,6 +4,7 @@ import 'package:flame/gestures.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'snake.dart';
+import 'package:snek/util/settings.dart';
 import 'board.dart';
 import '../util/position.dart';
 import 'package:flame/game/game.dart';
@@ -35,7 +36,17 @@ class SnekGame extends Game with PanDetector {
   Random rand = Random(DateTime.now().millisecondsSinceEpoch);
 
   //bool which represents whether or not the game is in acid mode
-  bool acidMode = false;
+  bool groovyMode = false;
+
+  //constructor, accepts a Settings object to build game in line with existing user specs
+  SnekGame(Settings settings) {
+    setSettings(settings);
+  }
+
+  void setSettings(Settings settings) {
+    setGroovyMode(settings.isInGroovyMode);
+    setSpeed(settings.isTurbo);
+  }
 
   /*
   * List which is used to initialize the snake's positions
@@ -60,16 +71,18 @@ class SnekGame extends Game with PanDetector {
     stepTime = double.infinity;
   }
 
-  //function to put the game in acid mode
-  void engageAcidMode() {
-    acidMode = true;
-    board.engageAcidMode();
+  //Function which alters whether or not the game is in groovy mode
+  void setGroovyMode(bool isGroovyModeEngaged) {
+    groovyMode = isGroovyModeEngaged;
+    board.setGroovyMode(isGroovyModeEngaged);
   }
 
-  //function to take the game out of acid mode
-  void disengageAcidMode() {
-    acidMode = false;
-    board.disengageAcidMode();
+  void setSpeed(bool isInTurboMode) {
+    if (isInTurboMode) {
+      stepTime = kStepTime * 2;
+    } else {
+      stepTime = kStepTime;
+    }
   }
 
   //resumes regular game updates by setting the steptime back to the original value

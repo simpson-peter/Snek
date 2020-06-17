@@ -1,7 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:snek/constants.dart';
-import 'package:snek/main.dart';
 import 'package:snek/util/tile.dart';
 import 'package:snek/util/position.dart';
 
@@ -14,7 +13,7 @@ class Board {
   Direction snakeDirection = Direction.down;
   Size screenSize;
   double tileLength;
-  bool acidMode = false;
+  bool groovyMode = false;
 
   List<Color> acidColors = [
     Color(0xFFeeaf61),
@@ -28,32 +27,8 @@ class Board {
     this.screenSize = screenSize;
   }
 
-  void engageAcidMode() {
-    acidMode = true;
-
-    /*
-    //populate acid colors
-    Iterator<Color> paletteIt = acidColorPalette.iterator;
-
-    //loop starts from i = 1 to avoid immediately switching colors
-    for (int i = 1; i <= numberOfVerticalTiles; i++) {
-      //if we've reached the end of the color palette, set it back to the beginning
-      if (paletteIt.current == null) {
-        //paletteIt = acidColorPalette.iterator;
-      }
-
-      acidColors.add(paletteIt.current);
-
-      //every five rows, move to the next color
-      if (i % 5 == 0) {
-        paletteIt.moveNext();
-      }
-    }
-     */
-  }
-
-  void disengageAcidMode() {
-    acidMode = false;
+  void setGroovyMode(bool isGroovyModeEngaged) {
+    groovyMode = isGroovyModeEngaged;
   }
 
   void render(Canvas canvas, Size screenSize) {
@@ -186,12 +161,9 @@ class Board {
 
   Color getTileColor(RowColPosition position) {
     //if we're not in acid mode, the background is just black
-    if (!acidMode) {
+    if (!groovyMode) {
       return Colors.black;
     }
-
-    //if we are in acid mode, pick color from the palette initialized in engageAcidMode()
-    int colorPosition = (position.row - position.col).abs();
 
     if (colorIdx >= acidColors.length) {
       colorIdx = 0;
