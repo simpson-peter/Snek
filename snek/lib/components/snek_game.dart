@@ -3,11 +3,11 @@ import 'dart:ui';
 import 'package:flame/gestures.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'components/snake.dart';
-import 'components/board.dart';
-import 'util/position.dart';
+import 'snake.dart';
+import 'board.dart';
+import '../util/position.dart';
 import 'package:flame/game/game.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 class SnekGame extends Game with PanDetector {
   //Snake object which store's the snake's positions on the board

@@ -3,10 +3,11 @@ import 'package:flame/util.dart';
 import 'package:flutter/services.dart';
 import 'package:snek/constants.dart';
 import 'widgets/loss_dialog.dart';
-import 'snek_game.dart';
+import 'components/snek_game.dart';
 import 'components/scoreboard.dart';
 import 'util/settings.dart';
 import 'widgets/settings_button.dart';
+import 'widgets/menu_item.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -158,64 +159,6 @@ class _SettingsMenuState extends State<SettingsMenu> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class MenuItem extends StatelessWidget {
-  final String label;
-  final Function onChanged;
-  final bool checkboxValue;
-
-  MenuItem({
-    @required this.label,
-    @required this.onChanged,
-    @required this.checkboxValue,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        Text(
-          label,
-          style: kSettingsMenuTextStyle,
-        ),
-        SettingsCheckbox(
-          value: checkboxValue,
-          onChanged: onChanged,
-        ),
-      ],
-    );
-  }
-}
-
-class SettingsCheckbox extends StatelessWidget {
-  final bool value;
-  final Function onChanged;
-
-  SettingsCheckbox({@required this.value, @required this.onChanged});
-
-  Widget getIcon() {
-    if (value == true) {
-      return Icon(
-        Icons.check_box,
-        color: Colors.white,
-      );
-    } else {
-      return Icon(
-        Icons.check_box_outline_blank,
-        color: Colors.white,
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onChanged,
-      child: getIcon(),
     );
   }
 }
