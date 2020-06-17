@@ -1,5 +1,7 @@
 import 'package:snek/util/position.dart';
 
+//Todo: Optimize membership tester to utilize the positions set
+
 class Snake {
   List<RowColPosition> _snakePositions;
   //snake position set for efficient membership testing

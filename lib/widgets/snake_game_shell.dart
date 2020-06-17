@@ -64,6 +64,12 @@ class _SnekGameShellState extends State<SnekGameShell> {
     */
     widget.settings = await showDialog(
       context: context,
+
+      /*
+      * Require that the player clicks the 'x' on the menu to navigate away
+      * (prevents an incomplete settings object from being returned)
+       */
+      barrierDismissible: false,
       builder: (_) => SettingsMenu(
         oldSettings: widget.settings,
       ),

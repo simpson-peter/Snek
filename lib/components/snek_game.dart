@@ -41,16 +41,6 @@ class SnekGame extends Game with PanDetector {
   //bool which represents whether or not the game is in acid mode
   bool groovyMode = false;
 
-  //constructor, accepts a Settings object to build game in line with existing user specs
-  SnekGame(Settings settings) {
-    setSettings(settings);
-  }
-
-  void setSettings(Settings settings) {
-    setGroovyMode(settings.isInGroovyMode);
-    setSpeed(settings.isTurbo);
-  }
-
   /*
   * List which is used to initialize the snake's positions
   * Should be contiguous, with the desired head position as the last element
@@ -68,6 +58,16 @@ class SnekGame extends Game with PanDetector {
   RowColPosition applePosition = RowColPosition(row: 10, col: 5);
 
   bool firstRun = true;
+
+  //constructor, accepts a Settings object to build game in line with existing user specs
+  SnekGame(Settings settings) {
+    setSettings(settings);
+  }
+
+  void setSettings(Settings settings) {
+    setGroovyMode(settings.isInGroovyMode);
+    setSpeed(settings.isTurbo);
+  }
 
   //function to pause the game by setting the step time to infinity
   void pause() {
