@@ -11,7 +11,7 @@ void main() {
   Util flameUtil = Util();
   //make app full screen, lock vertical orientation
   flameUtil.fullScreen();
-  //flameUtil.setOrientation(DeviceOrientation.portraitUp);
+  flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
   //Run the game shell
   runApp(MaterialApp(home: SnekGameShell()));
