@@ -18,3 +18,10 @@ const TextStyle kLossMenuTextStyle = TextStyle(
   fontFamily: 'PressStart2P',
   color: Colors.white,
 );
+
+const TextStyle kSettingsMenuTextStyle = TextStyle(
+  fontSize: 15,
+  fontFamily: 'PressStart2P',
+  color: Colors.white,
+  decoration: TextDecoration.none,
+);

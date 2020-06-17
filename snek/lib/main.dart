@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flame/util.dart';
 import 'package:flutter/services.dart';
+import 'package:snek/constants.dart';
 import 'widgets/loss_dialog.dart';
 import 'snek_game.dart';
 import 'components/scoreboard.dart';
+import 'util/settings.dart';
+import 'widgets/settings_button.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +25,9 @@ class SnekGameShell extends StatefulWidget {
   int score;
   SnekGame snekGame = SnekGame();
 
+  //initialize a settings object with all fields turned off
+  Settings settings = Settings();
+
   @override
   _SnekGameShellState createState() => _SnekGameShellState();
 }
@@ -39,6 +45,7 @@ class _SnekGameShellState extends State<SnekGameShell> {
     });
   }
 
+  //Function which handles the game once an end-condition has been reached (user lost)
   void restart() async {
     //pause the game so that multiple dialogs are not generated
     widget.snekGame.pause();
@@ -58,10 +65,26 @@ class _SnekGameShellState extends State<SnekGameShell> {
     });
   }
 
-  void onSettingsPressed() {
-    widget.snekGame.engageAcidMode();
+  //Function which handles the behavior of the rest of the app while the user is in the settings menu
+  void onSettingsPressed() async {
+    //pause the game while the user is in settings
+    widget.snekGame.pause();
 
-    //showDialog(context: context, builder: (_) => SettingsMenu(),);
+    /*
+    * Display the settings menu,
+    * then receive the updated settings object from the settings menu
+    */
+    widget.settings = await showDialog(
+      context: context,
+      builder: (_) => SettingsMenu(
+        settings: widget.settings,
+      ),
+    );
+
+    print('Settings returned, is groovy mode engaged? ' +
+        widget.settings.isInGroovyMode.toString());
+
+    widget.snekGame.resume();
   }
 
   @override
@@ -83,6 +106,10 @@ class _SnekGameShellState extends State<SnekGameShell> {
 }
 
 class SettingsMenu extends StatefulWidget {
+  Settings settings;
+
+  SettingsMenu({@required this.settings});
+
   @override
   _SettingsMenuState createState() => _SettingsMenuState();
 }
@@ -90,6 +117,59 @@ class SettingsMenu extends StatefulWidget {
 class _SettingsMenuState extends State<SettingsMenu> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return GestureDetector(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+        color: Colors.black,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SettingsButton(
+              onPressed: () {
+                Navigator.pop(context, widget.settings);
+              },
+              child: Icon(
+                Icons.close,
+                color: Colors.white,
+              ),
+            ),
+            Text(
+              'Settings',
+              style: kSettingsMenuTextStyle,
+            ),
+            /*MenuItem(
+              label: 'Strange Mode',
+              onChanged: (bool checked) {},
+            ),*/
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MenuItem extends StatelessWidget {
+  final String label;
+  final Function onChanged;
+
+  MenuItem({@required this.label, @required this.onChanged});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Text(
+          label,
+          style: kSettingsMenuTextStyle,
+        ),
+        Checkbox(
+          onChanged: onChanged,
+        ),
+      ],
+    );
   }
 }
