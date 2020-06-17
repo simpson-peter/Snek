@@ -142,18 +142,18 @@ class _SettingsMenuState extends State<SettingsMenu> {
               ),
             ),
             Text(
-              'Settings',
+              'SETTINGS',
               style: kSettingsMenuTextStyle,
             ),
             MenuItem(
-              label: 'Strange Mode',
+              label: 'GROOVY MODE',
               //update the settings object to match the checkbox state
               onChanged: () {
                 setState(() {
                   newSettings.isInGroovyMode = !newSettings.isInGroovyMode;
                 });
               },
-              checkboxValue: widget.oldSettings.isInGroovyMode,
+              checkboxValue: newSettings.isInGroovyMode,
             ),
           ],
         ),
@@ -197,14 +197,25 @@ class SettingsCheckbox extends StatelessWidget {
 
   SettingsCheckbox({@required this.value, @required this.onChanged});
 
+  Widget getIcon() {
+    if (value == true) {
+      return Icon(
+        Icons.check_box,
+        color: Colors.white,
+      );
+    } else {
+      return Icon(
+        Icons.check_box_outline_blank,
+        color: Colors.white,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onChanged,
-      child: Icon(
-        Icons.check_circle,
-        color: Colors.white,
-      ),
+      child: getIcon(),
     );
   }
 }
