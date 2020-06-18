@@ -1,6 +1,8 @@
 # Snek
 This is an open-source game for iOS and Android created by [Peter Simpson](petersimpson.me). It is very similar to the classic Snake, but with a few fun extra features.
 
+![Snek Screencap 1](https://petersimpson.me/img/snek_screenshots/snek_bw0_mini.png)
+
 ## Design
 Snek is implemented in Dart and utilizes the Flutter and Flame frameworks.
 The top-level logic and coordination of the game is handled by the SnekGameShell, which organizes the game itself, as well as the scoreboard and various menus and alerts.
