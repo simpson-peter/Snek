@@ -1,5 +1,5 @@
 # Snek 2D
-This is an open-source game for iOS and Android created by [Peter Simpson](petersimpson.me). It is very similar to the classic Snake, but with a few fun extra features.
+This is an open-source game for iOS and Android created by [Peter Simpson](http://petersimpson.me). It is very similar to the classic Snake, but with a few fun extra features.
 
 ![Snek Screencap 1](screenshots/snek_bw0_mini.png)
 ![Snek Screencap 2](screenshots/snek_groovy0_mini.png)
